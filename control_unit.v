@@ -15,8 +15,9 @@ module control_unit(
     weB = 0;
     selA = 2'b00;
     selB = 2'b01; // por defecto: a=A, b=B
-    alu_op = 4'h0;            // PASSA
-
+    alu_op = 4'h0;            
+    
+    // PASSA
     case (opcode)
       // MOV
       7'h00: begin // MOV A,B

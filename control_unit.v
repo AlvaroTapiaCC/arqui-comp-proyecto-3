@@ -75,8 +75,9 @@ module control_unit(
       end
       7'h09: begin // SUB B,A
         alu_op = 4'h3;
-        selA = 2'b01;
-        selB = 2'b00;
+        // Necesitamos A - B (no B - A): 'a' debe ser A y 'b' debe ser B
+        selA = 2'b00; // A
+        selB = 2'b01; // B
         weB = 1;
       end
       7'h0A: begin // SUB A, lit

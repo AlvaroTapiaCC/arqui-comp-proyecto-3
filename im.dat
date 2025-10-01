@@ -3,15 +3,242 @@
 000001000101010
 // Instruction 2: MOV B, 123
 000001101111011
-// --- Test 1: ADD ---
-// Instruction 3: MOV A, 2
+
+// --- Test 1: MOV Register to Register ---
+// Instruction 3: MOV B, 85
+000001101010101
+// Instruction 4: MOV A, 170
+000001010101010
+// Instruction 5: MOV A, B (A = 85)
+000000000000000
+// Instruction 6: MOV A, 99
+000001001100011
+// Instruction 7: MOV B, A (B = 99)
+000000100000000
+
+// --- Test 2: ADD (Register and Literal) ---
+// Instruction 8: MOV A, 2
 000001000000010
-// Instruction 4: MOV B, 3
+// Instruction 9: MOV B, 3
 000001100000011
-// Instruction 5: ADD A, B (A = A + B -> A = 2 + 3 = 5)
+// Instruction 10: ADD A, B  (A = A + B -> A = 2 + 3 = 5)
 000010000000000
-// --- Test 2: SHL ---
-// Instruction 6: MOV A, 5 (Overwrites A)
+// Instruction 11: ADD A, 10 (A = A + 10 -> A = 5 + 10 = 15)
+000011000001010
+// Instruction 12: ADD B, 20 (B = B + 20 -> B = 3 + 20 = 23)
+000011100010100
+
+// --- Test 3: SUB (Register and Literal) ---
+// Instruction 13: MOV A, 20
+000001000010100
+// Instruction 14: MOV B, 5
+000001100000101
+// Instruction 15: SUB A, B  (A = A - B -> A = 20 - 5 = 15)
+000100000000000
+// Instruction 16: SUB B, A  (B = A - B -> B = 15 - 5 = 10)
+000100100000000
+// Instruction 17: SUB A, 7  (A = A - Lit -> A = 15 - 7 = 8)
+000101000000111
+// Instruction 18: SUB B, 10 (B = B - Lit -> B = -10 - 10 = -20)
+000101100001010
+
+// --- Test 4: AND (Register and Literal) ---
+// Instruction 19: MOV A, 202 (11001010)
+000001011001010
+// Instruction 20: MOV B, 174 (10101110)
+000001110101110
+// Instruction 21: AND A, B  (A = A & B -> A = 202 & 174 = 138)
+000110000000000
+// Instruction 22: AND B, A  (B = B & A -> B = 174 & 138 = 138)
+000110100000000
+
+// Instruction 23: MOV A, 240 (11110000)
+000001011110000
+// Instruction 24: AND A, 85 (A = A & Lit -> A = 240 & 85 = 80)
+000111001010101
+// Instruction 25: MOV B, 204 (11001100)
+000001111001100
+// Instruction 26: AND B, 170 (B = B & Lit -> B = 204 & 170 = 136)
+000111110101010
+
+// --- Test 5: OR (Register and Literal) ---
+// Instruction 27: MOV A, 202 (11001010)
+000001011001010
+// Instruction 28: MOV B, 174 (10101110)
+000001110101110
+// Instruction 29: OR A, B  (A = A | B -> A = 202 | 174 = 238)
+001000000000000
+// Instruction 30: OR B, A  (B = B | A -> B = 174 | 238 = 238)
+001000100000000
+
+// Instruction 31: MOV A, 51 (00110011)
+000001000110011
+// Instruction 32: OR A, 240 (A = A | Lit -> A = 51 | 240 = 243)
+001001011110000
+// Instruction 33: MOV B, 165 (10100101)
+000001110100101
+// Instruction 34: OR B, 90 (B = B | Lit -> B = 165 | 90 = 255)
+001001101011010
+
+// --- Test 6: NOT Instructions ---
+// Instruction 35: MOV A, 170 (10101010)
+000001010101010
+// Instruction 36: NOT A, A (A = ~A -> A = ~170 = 85)
+001010000000000
+// Instruction 37: MOV B, 204 (11001100)
+000001111001100
+// Instruction 38: NOT B, B (B = ~B -> B = ~204 = 51)
+001011100000000
+
+// Setup for NOT A, B
+// Instruction 39: MOV A, 255 (to be overwritten)
+000001011111111
+// Instruction 40: MOV B, 240 (11110000, the source)
+000001111110000
+// Instruction 41: NOT A, B (A = ~B -> A = ~240 = 15)
+001010100000000
+
+// Setup for NOT B, A
+// Instruction 42: MOV A, 15 (00001111, the source)
+000001000001111
+// Instruction 43: MOV B, 255 (to be overwritten)
+000001111111111
+// Instruction 44: NOT B, A (B = ~A -> B = ~15 = 240)
+001011000000000
+
+// --- Test 7: XOR (Register and Literal) ---
+// Instruction 45: MOV A, 202 (11001010)
+000001011001010
+// Instruction 46: MOV B, 174 (10101110)
+000001110101110
+// Instruction 47: XOR A, B (A = A ^ B -> A = 202 ^ 174 = 100)
+001100000000000
+// Instruction 48: XOR A, B (A = A ^ B -> A = 100 ^ 174 = 202)
+001100000000000
+
+// Instruction 49: MOV A, 240 (11110000)
+000001011110000
+// Instruction 50: MOV B, 170 (10101010)
+000001110101010
+// Instruction 51: XOR B, A (B = B ^ A -> B = 170 ^ 240 = 90)
+001100100000000
+
+// Instruction 52: MOV A, 60 (00111100)
+000001000111100
+// Instruction 53: XOR A, 255 (A = A ^ Lit -> A = 60 ^ 255 = 195)
+001101011111111
+// Instruction 54: MOV B, 146 (10010010)
+000001110010010
+// Instruction 55: XOR B, 102 (B = B ^ Lit -> B = 146 ^ 102 = 244)
+001101101100110
+
+// --- Test 8: SHL Instructions ---
+
+// Test Case 1: SHL A, A (A = A << 1)
+// A = 5. Result should be 5 << 1 = 10.
+// Instruction 56: MOV A, 5 (00000101)
 000001000000101
-// Instruction 7: SHL A, A (A = A << 1 -> A = 5 * 2 = 10)
+// Instruction 57: SHL A, A
 001110000000000
+
+// Test Case 2: SHL B, B (B = B << 1)
+// B = 12. Result should be 12 << 1 = 24.
+// Instruction 58: MOV B, 12 (00001100)
+000001100001100
+// Instruction 59: SHL B, B
+001111100000000
+
+// Test Case 3: SHL A, B (A = B << 1)
+// B = 21. Result for A should be 21 << 1 = 42. B should be unchanged.
+// Instruction 60: MOV A, 99 (placeholder, will be overwritten)
+000001001100011
+// Instruction 61: MOV B, 21 (00010101)
+000001100010101
+// Instruction 62: SHL A, B
+001110100000000
+
+// Test Case 4: SHL B, A (B = A << 1)
+// A = 30. Result for B should be 30 << 1 = 60. A should be unchanged.
+// Instruction 63: MOV B, 88 (placeholder, will be overwritten)
+000001101011000
+// Instruction 64: MOV A, 30 (00011110)
+000001000011110
+// Instruction 65: SHL B, A
+001111000000000
+
+// Test Case 5: Overflow Test (B = A << 1)
+// A = 192 (11000000). Result for B should be 192 << 1 = 128 (10000000).
+// The most significant bit is shifted out. A is unchanged.
+// Instruction 66: MOV B, 0 (placeholder, will be overwritten)
+000001100000000
+// Instruction 67: MOV A, 192 (11000000)
+000001011000000
+// Instruction 68: SHL B, A
+001111000000000
+
+// --- Test 9: SHR Instructions ---
+
+// Test Case 1: SHR A, A (A = A >> 1)
+// A = 10. Result should be 10 >> 1 = 5.
+// Instruction 69: MOV A, 10 (00001010)
+000001000001010
+// Instruction 70: SHR A, A
+010000000000000
+
+// Test Case 2: SHR B, B (B = B >> 1)
+// B = 24. Result should be 24 >> 1 = 12.
+// Instruction 71: MOV B, 24 (00011000)
+000001100011000
+// Instruction 72: SHR B, B
+010001100000000
+
+// Test Case 3: SHR A, B (A = B >> 1)
+// B = 42. Result for A should be 42 >> 1 = 21. B should be unchanged.
+// Instruction 73: MOV A, 99 (placeholder, will be overwritten)
+000001001100011
+// Instruction 74: MOV B, 42 (00101010)
+000001100101010
+// Instruction 75: SHR A, B
+010000100000000
+
+// Test Case 4: SHR B, A (B = A >> 1)
+// A = 60. Result for B should be 60 >> 1 = 30. A should be unchanged.
+// Instruction 76: MOV B, 88 (placeholder, will be overwritten)
+000001101011000
+// Instruction 77: MOV A, 60 (00111100)
+000001000111100
+// Instruction 78: SHR B, A
+010001000000000
+
+// Test Case 5: LSB Discard Test (B = A >> 1)
+// A = 13 (00001101). Result for B should be 13 >> 1 = 6 (00000110).
+// The LSB (1) is discarded. A is unchanged.
+// Instruction 79: MOV B, 0 (placeholder, will be overwritten)
+000001100000000
+// Instruction 80: MOV A, 13 (00001101)
+000001000001101
+// Instruction 81: SHR B, A
+010001000000000
+
+// --- Test 10: INC B (Increment Register B) ---
+
+// Test Case 1: Basic Increment
+// B = 50. Result should be 50 + 1 = 51.
+// Instruction 82: MOV B, 50
+000001100110010
+// Instruction 83: INC B
+010010000000000
+
+// Test Case 2: Increment from Zero
+// B = 0. Result should be 0 + 1 = 1.
+// Instruction 84: MOV B, 0
+000001100000000
+// Instruction 85: INC B
+010010000000000
+
+// Test Case 3: Rollover/Overflow Test
+// B = 255. Result should be 255 + 1 = 0 (8-bit overflow).
+// Instruction 86: MOV B, 255 (11111111)
+000001111111111
+// Instruction 87: INC B
+010010000000000

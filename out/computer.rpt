@@ -1,0 +1,224 @@
+18. Printing statistics.
+
+=== $paramod\register\W=s32'00000000000000000000000000001000 ===
+
+   Number of wires:                  5
+   Number of wire bits:             19
+   Number of public wires:           5
+   Number of public wire bits:      19
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  8
+     $_DFFE_PP0P_                    8
+
+=== alu ===
+
+   Number of wires:                368
+   Number of wire bits:            392
+   Number of public wires:           8
+   Number of public wire bits:      32
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                371
+     $_ANDNOT_                     166
+     $_AND_                         20
+     $_NAND_                        12
+     $_NOR_                         24
+     $_NOT_                         15
+     $_ORNOT_                       11
+     $_OR_                          92
+     $_XNOR_                         9
+     $_XOR_                         22
+
+=== computer ===
+
+   Number of wires:                 57
+   Number of wire bits:            211
+   Number of public wires:          34
+   Number of public wire bits:     188
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 50
+     $_ANDNOT_                       7
+     $_NAND_                         7
+     $_NOT_                          1
+     $_OR_                           9
+     $_XNOR_                         7
+     $_XOR_                          8
+     $paramod\register\W=s32'00000000000000000000000000001000      2
+     alu                             1
+     control_unit                    1
+     data_memory                     1
+     instruction_memory              1
+     muxA                            1
+     muxB                            1
+     mux_data                        1
+     pc                              1
+     status_register                 1
+
+=== control_unit ===
+
+   Number of wires:                 81
+   Number of wire bits:             92
+   Number of public wires:           6
+   Number of public wire bits:      17
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 85
+     $_ANDNOT_                      20
+     $_AND_                          1
+     $_MUX_                         22
+     $_NAND_                         3
+     $_NOR_                          1
+     $_NOT_                          6
+     $_ORNOT_                        3
+     $_OR_                          28
+     $_XNOR_                         1
+
+=== data_memory ===
+
+   Number of wires:               2853
+   Number of wire bits:           4666
+   Number of public wires:         261
+   Number of public wire bits:    2074
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               4648
+     $_ANDNOT_                     256
+     $_DFFE_PP_                   2048
+     $_MUX_                       2040
+     $_NAND_                         4
+     $_ORNOT_                        8
+     $_OR_                         292
+
+=== instruction_memory ===
+
+   Number of wires:                  4
+   Number of wire bits:             33
+   Number of public wires:           2
+   Number of public wire bits:      31
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 11
+     $_ANDNOT_                       5
+     $_AND_                          1
+     $_MUX_                          1
+     $_NOR_                          1
+     $_NOT_                          1
+     $_ORNOT_                        1
+     $_OR_                           1
+
+=== muxA ===
+
+   Number of wires:                 49
+   Number of wire bits:             78
+   Number of public wires:           5
+   Number of public wire bits:      34
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 52
+     $_ANDNOT_                      39
+     $_NAND_                         1
+     $_NOR_                          1
+     $_ORNOT_                        9
+     $_OR_                           2
+
+=== muxB ===
+
+   Number of wires:                 49
+   Number of wire bits:             78
+   Number of public wires:           5
+   Number of public wire bits:      34
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 52
+     $_ANDNOT_                      39
+     $_NAND_                         1
+     $_NOR_                          1
+     $_ORNOT_                        9
+     $_OR_                           2
+
+=== mux_data ===
+
+   Number of wires:                 49
+   Number of wire bits:             78
+   Number of public wires:           5
+   Number of public wire bits:      34
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 52
+     $_ANDNOT_                      39
+     $_NAND_                         1
+     $_NOR_                          1
+     $_ORNOT_                        9
+     $_OR_                           2
+
+=== pc ===
+
+   Number of wires:                  4
+   Number of wire bits:             34
+   Number of public wires:           4
+   Number of public wire bits:      34
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 16
+     $_DFF_PP0_                     16
+
+=== status_register ===
+
+   Number of wires:                 13
+   Number of wire bits:             25
+   Number of public wires:          13
+   Number of public wire bits:      25
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 11
+     $_DFFE_PP0P_                   11
+
+=== design hierarchy ===
+
+   computer                          1
+     $paramod\register\W=s32'00000000000000000000000000001000      2
+     alu                             1
+     control_unit                    1
+     data_memory                     1
+     instruction_memory              1
+     muxA                            1
+     muxB                            1
+     mux_data                        1
+     pc                              1
+     status_register                 1
+
+   Number of wires:               3537
+   Number of wire bits:           5725
+   Number of public wires:         353
+   Number of public wire bits:    2541
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               5353
+     $_ANDNOT_                     571
+     $_AND_                         22
+     $_DFFE_PP0P_                   27
+     $_DFFE_PP_                   2048
+     $_DFF_PP0_                     16
+     $_MUX_                       2063
+     $_NAND_                        29
+     $_NOR_                         29
+     $_NOT_                         23
+     $_ORNOT_                       50
+     $_OR_                         428
+     $_XNOR_                        17
+     $_XOR_                         30
+

@@ -8,8 +8,10 @@ module instruction_memory(
 
   initial begin
     $readmemb("im.dat", mem);   // <--- BINARIO
-    // Log para verificar carga (aparece una sola vez en consola)
+`ifndef SYNTHESIS
+    // Log para verificar carga (solo en simulación)
     $display("[IMEM] mem[0]=%b mem[1]=%b", mem[0], mem[1]);
+`endif
   end
 
   // Entregamos los 15 bits válidos: [14:8]=opcode (7b), [7:0]=imm (8b)

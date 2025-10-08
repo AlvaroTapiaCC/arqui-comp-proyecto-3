@@ -1,0 +1,61 @@
+// --- Test Case: Full & Expanded Memory Sequence ---
+
+// --- Part 1: Original Test (RegB -> Mem -> RegA) ---
+// Inst 0: MOV B, 99      | Description: Loads the immediate value 99 into register B.
+000001101100011
+// Inst 1: MOV (50), B    | Description: Stores the value from register B into data memory at address 50.
+010100000110010
+// Inst 2: MOV A, (50)    | Description: Loads the value from data memory at address 50 into register A.
+010010100110010
+
+// --- Part 2: Symmetric Test (RegA -> Mem -> RegB) ---
+// Inst 3: MOV A, 123     | Description: Loads the immediate value 123 into register A.
+000001001111011
+// Inst 4: MOV (51), A    | Description: Stores the value from register A into data memory at address 51.
+010011100110011
+// Inst 5: MOV B, (51)    | Description: Loads the value from data memory at address 51 into register B.
+010011000110011
+
+// --- Part 3: Overwrite and Edge Case Test (0 and 255) ---
+// Inst 6: MOV A, 255     | Description: Loads the immediate value 255 into register A.
+000001011111111
+// Inst 7: MOV (50), A    | Description: Stores the value from register A into data memory at address 50, overwriting the previous value.
+010011100110010
+// Inst 8: MOV A, 0       | Description: Loads the immediate value 0 into register A.
+000001000000000
+// Inst 9: MOV A, (50)    | Description: Loads the value from data memory at address 50 (which is 255) into register A.
+010010100110010
+
+// --- Test Case: ADD A, (Dir) ---
+// Goal: Verify A = A + Mem[Dir]. Expected result in A is 150.
+
+// Inst 10: MOV A, 100    | Description: Loads the operand 100 into register A.
+000001001100100
+// Inst 11: MOV B, 50     | Description: Loads the operand 50 into register B.
+000001100110010
+// Inst 12: MOV (120), B  | Description: Stores the value from register B into memory at address 120.
+010100001111000
+// Inst 13: ADD A, (120)  | Description: Adds the value from DM[120] to register A (A = 100 + 50 = 150).
+010110001111000
+
+// --- Test Program: IF (A == B) THEN DM[100]=1 ELSE DM[100]=2 ---
+
+// Inst 14: MOV A, 25     | Description: Loads the immediate value 25 into register A.
+000001000011001
+// Inst 15: MOV B, 25     | Description: Loads the immediate value 25 into register B.
+000001100011001
+// Inst 16: CMP A,B       | Description: Compares A and B, setting the zero flag (Z=1) since they are equal.
+100110100000000
+// Inst 17: JEQ 20        | Description: Jumps to instruction 20 because the zero flag is set.
+101010000010100
+// --- "Else" Block (should be skipped) ---
+// Inst 18: MOV B, 2      | Description: Loads the immediate value 2 into register B.
+000001100000010
+// Inst 19: JMP 21        | Description: Unconditionally jumps to instruction 21 to bypass the "if" block.
+101000000010101
+// --- "If" Block (should be executed) ---
+// Inst 20: MOV B, 1      | Description: Loads the immediate value 1 into register B.
+000001100000001
+// --- Common Code ---
+// Inst 21: MOV (100), B  | Description: Stores the result from register B (which is 1) into DM[100].
+010100001100100

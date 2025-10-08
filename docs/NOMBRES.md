@@ -19,12 +19,16 @@ Este documento sirve como referencia rápida para entender qué representa cada 
 | `imm` | computer | 8 | Inmediato literal (bits [7:0] de `ir15`) |
 | `A_q` / `B_q` | computer | 8 | Registros generales A y B |
 | `weA` / `weB` | control_unit -> computer | 1 | Enables de escritura para A / B |
-| `selA` / `selB` | control_unit -> muxA/muxB | 2 | Selección de operandos a la ALU (00=A, 01=B, 10=IMM) |
+| `selA` / `selB` | control_unit -> muxA/muxB | 2 | Selección operandos ALU (00=A,01=B,10=IMM,11=DMEM futuro) |
 | `alu_op` | control_unit -> alu | 4 | Selección de operación ALU |
 | `opA` / `opB` | computer | 8 | Operandos efectivos que entran a la ALU |
 | `alu_y` | alu -> computer | 8 | Resultado de la ALU antes de write‑back |
 | `write_bus` | computer | 8 | Dato que se escribe en A o B (salida de `mux_data`) |
-| `dmem_rdata` | data_memory -> computer | 8 | Lectura desde Data Memory (placeholder) |
+| `sel_data` | control_unit -> mux_data | 2 | Fuente write-back (00=ALU,01=DMEM,10=Literal,11=reservado) |
+| `we_mem` | control_unit -> data_memory | 1 | Habilita escritura en Data Memory |
+| `mem_addr` | computer | 8 | Dirección efectiva a Data Memory (hoy = `imm`) |
+| `mem_wdata` | computer | 8 | Dato que se escribe en memoria (A o B / futuro ALU) |
+| `dmem_rdata` | data_memory -> computer | 8 | Lectura desde Data Memory |
 | `last_opcode` | status_register | 7 | Último opcode que generó escritura en A o B |
 | `Zf Nf Cf Vf` | status_register | 1 cada | Flags latched (Zero, Negative, Carry, Overflow) |
 | `flags_packed` | status_register | 4 | Empaquetado `{Z,N,C,V}` |
@@ -46,10 +50,14 @@ Este documento sirve como referencia rápida para entender qué representa cada 
 - `write_bus` : Bus común de escritura hacia A o B (selección posterior de ALU / memoria / literal).
 
 ### 2.3 Control
-- `selA`, `selB` : Mux selects para operandos ALU (00=A, 01=B, 10=IMM, 11=reservado/futuro).
+- `selA`, `selB` : Mux selects para operandos ALU (00=A, 01=B, 10=IMM, 11=DMEM planeado).
 - `alu_op` : Código de operación interno de la ALU.
-- (Futuro) `sel_data` : Selección de fuente de `write_bus` (ALU / DataMem / Literal / Reservado).
-- (Futuro) `we_mem` : Enable de escritura a Data Memory (STORE).
+- `sel_data` : Fuente de `write_bus` (implementado).
+- `we_mem` : Enable de escritura a Data Memory (implementado).
+- (Futuro) `addr_sel` : 0=usar `imm` como dirección, 1=usar registro B (indirecto).
+- (Futuro) `latch_flags` : Habilita captura de flags incluso sin escritura de registros (para CMP / test).
+- (Futuro) `branch_taken` : Indica que próximo PC será un target de salto.
+- (Futuro) `branch_target` : Dirección (zero-extend `imm`) para actualizar PC en saltos.
 
 ### 2.4 Operandos / Muxes
 - `opA`, `opB` : Salidas de `muxA` y `muxB` que entran a la ALU.
@@ -63,9 +71,13 @@ Este documento sirve como referencia rápida para entender qué representa cada 
 - Operaciones actuales (op):
 	- 0 PASSA, 1 PASSB, 2 ADD, 3 SUB, 4 AND, 5 OR, 6 XOR, 7 NOT(A), 8 SHL(A), 9 SHR(A), A INC(B).
 
-### 2.6 Memoria de Datos (placeholder)
-- `dmem_rdata` : Lectura (siempre dirección fija por ahora 0x00).
-- (Futuro) `addr` (actualmente constante), `we`, `wdata` se activarán para LOAD/STORE reales.
+### 2.6 Memoria de Datos
+- `mem_addr` : Dirección efectiva (hoy inmediato; futuro: mux con B).
+- `mem_wdata` : Dato a escribir (por ahora A o B seleccionados en top; futuro: salida ALU genérica).
+- `dmem_rdata` : Lectura combinacional de Data Memory.
+- `we_mem` : Señal global de escritura habilitada desde control.
+- (Futuro) `addr_sel` : Selección de fuente de dirección (imm vs B).
+- (Futuro) `mem_operand` : Valor leído usado como operando ALU cuando `selB=11`.
 
 ### 2.7 Flags y Status
 - Señales crudas desde ALU: `Z`, `N`, `C_from_alu`, `V_from_alu`.
@@ -116,16 +128,21 @@ Este documento sirve como referencia rápida para entender qué representa cada 
 - Entradas: `alu_y`, `data_mem_y`, `literal_y`, `sel[1:0]`.
 - Salida: `out` (`write_bus`).
 
-### 2.10 Convenciones de selección (actual / futuro)
-- `selA` / `selB`: 00 = A, 01 = B, 10 = IMM, 11 = reservado.
-- (Planeado) `sel_data`: 00 = ALU, 01 = Data Memory, 10 = Literal directo, 11 = reservado.
+### 2.10 Convenciones de selección
+- `selA` / `selB`: 00=A, 01=B, 10=IMM, 11=DMEM (planeado para operandos desde memoria).
+- `sel_data`: 00=ALU, 01=Data Memory, 10=Literal, 11=reservado.
+- (Futuro) `addr_sel`: 0=imm, 1=B.
+- (Futuro) `latch_flags`: 1=latch flags (instrucciones tipo CMP / test).
 
 ---
 
 ## 3. Futura expansión (placeholders)
-- `sel_data` : Permitirá elegir entre ALU / DataMem / Literal para el `write_bus`.
-- `we_mem` : Activará escritura a Data Memory (STORE).
-- Para LOAD/STORE se usará inicialmente `imm` como dirección directa (modo simple inmediato). Más adelante podría añadirse direccionamiento indirecto.
+- Modo indirecto: `addr_sel` para direccionar con B.
+- Operando memoria directo: `selB=11` para inyectar `dmem_rdata` a la ALU.
+- Instrucción CMP: requiere `latch_flags` sin `weA/weB`.
+- Saltos: `branch_taken`, `branch_target` y multiplexor de PC.
+- Mem ops avanzadas: mem write usando `alu_y` (unificar `mem_wdata` = `alu_y`).
+- Op CLEAR / ZERO para RST (o reutilizar literal 0 si se fuerza a nivel de programa).
 
 ---
 

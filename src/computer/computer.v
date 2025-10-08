@@ -10,7 +10,8 @@ module computer(
 );
   // ===== PC & Fetch =====
   wire [15:0] pc_curr;             // rPC
-  wire [15:0] pc_next = pc_curr + 16'd1; // nxt_pc
+  wire [15:0] pc_seq_next = pc_curr + 16'd1; // incremento secuencial
+  reg  [15:0] pc_next;             // mux de salto
   wire [14:0] ir15;                // im_word bruto
 
   pc U_PC(.clk(clk), .rst(rst), .next_pc(pc_next), .pc(pc_curr));
@@ -33,12 +34,24 @@ module computer(
   // selX: 00->A, 01->B, 10->IMM (para alimentar 'a' o 'b' según operación)
   wire [1:0] selA, selB;
   wire [3:0] alu_op;
+  // Nuevas señales para memoria / write-back
+  wire [1:0] sel_data;   // selección fuente write_bus
+  wire       we_mem;     // enable escritura memoria
+  wire       addr_sel;   // selección dirección (directo/indirecto)
+  wire       latch_flags; // forzar captura de flags (CMP)
+  wire       branch_taken; // salto tomado
 
   control_unit CU (
     .opcode(opcode),
+    .zf(Zf), .nf(Nf), .cf(Cf), .vf(Vf),
     .weA(weA), .weB(weB),
     .selA(selA), .selB(selB),
-    .alu_op(alu_op)
+    .alu_op(alu_op),
+    .sel_data(sel_data),
+    .we_mem(we_mem),
+    .addr_sel(addr_sel),
+    .latch_flags(latch_flags),
+    .branch_taken(branch_taken)
   );
 
   // Señales crudas desde la ALU
@@ -57,7 +70,7 @@ module computer(
     .sel(selA), .out(opA)
   );
   muxB U_MUXB(
-    .A_q(A_q), .B_q(B_q), .imm(imm),
+    .A_q(A_q), .B_q(B_q), .imm(imm), .dmem_rdata(dmem_rdata),
     .sel(selB), .out(opB)
   );
 
@@ -68,13 +81,24 @@ module computer(
     .c(C_from_alu), .v(V_from_alu)
   );
 
-  // Data Memory (placeholder: lectura fija de addr 0, sin escrituras)
+  // Data Memory
   wire [7:0] dmem_rdata;              // dm_rdata
+  // Dirección de memoria: futuro mux (addr_sel) entre inmediato y B (modo indirecto). Por ahora inmediato.
+  wire [7:0] mem_addr = (addr_sel) ? B_q : imm;
+  // Dato a escribir: para STORE clásicos usamos directamente el registro fuente
+  // (más robusto frente a dependencias de ALU). Para futuras operaciones que
+  // escriban resultado ALU a memoria, se mantiene fallback a alu_y.
+  wire store_from_A = (opcode == 7'h27);
+  wire store_from_B = (opcode == 7'h28);
+  wire [7:0] mem_wdata = store_from_A ? A_q :
+                         store_from_B ? B_q :
+                         alu_y; // fallback (ALU->Mem en extensiones)
+
   data_memory U_DMEM(
     .clk(clk),
-    .we(1'b0),           // sin escritura aún
-    .addr(8'h00),        // dirección fija para no afectar comportamiento
-    .wdata(8'h00),
+    .we(we_mem),
+    .addr(mem_addr),
+    .wdata(mem_wdata),
     .rdata(dmem_rdata)
   );
 
@@ -85,20 +109,26 @@ module computer(
     .alu_y(alu_y),
     .data_mem_y(data_mem_y),
     .literal_y(literal_y),
-    .sel(2'b00), // siempre ALU por ahora
+    .sel(sel_data),
     .out(write_bus)
   );
 
   // Instancia del status register: captura flags y opcode cuando hay escritura en A o B
   status_register U_SR(
     .clk(clk), .rst(rst),
-    .latch_en(weA || weB),
+    .latch_en((weA || weB) || latch_flags),
     .opcode_in(opcode),
     .z_in(Z), .n_in(N), .c_in(C_from_alu), .v_in(V_from_alu),
     .last_opcode(last_opcode),
     .z(Zf), .n(Nf), .c(Cf), .v(Vf),
     .flags_packed(flags_packed_dbg)
   );
+
+  // ===== Branch target y selección de PC =====
+  wire [15:0] branch_target = {8'h00, imm}; // salto absoluto simple
+  always @* begin
+    if (branch_taken) pc_next = branch_target; else pc_next = pc_seq_next;
+  end
 
   // ===== Exposición de señales al exterior (para síntesis / integración futura) =====
   assign A_out = A_q;
@@ -127,6 +157,13 @@ module computer(
   wire [7:0]  dbg_rB            = B_q;
   wire [7:0]  dbg_wb_data       = write_bus;
   wire [7:0]  dbg_dm_rdata      = dmem_rdata;
+  wire [1:0]  dbg_sel_data      = sel_data;
+  wire        dbg_we_mem        = we_mem;
+  wire [7:0]  dbg_mem_addr      = mem_addr;
+  wire [7:0]  dbg_mem_wdata     = mem_wdata;
+  wire        dbg_addr_sel      = addr_sel;
+  wire        dbg_branch_taken  = branch_taken;
+  wire        dbg_latch_flags   = latch_flags;
   wire [7:0]  dbg_alu_y         = alu_y;
   wire [3:0]  dbg_flags_packed  = flags_packed_dbg; // {Z,N,C,V}
   wire [6:0]  dbg_last_opcode   = last_opcode;

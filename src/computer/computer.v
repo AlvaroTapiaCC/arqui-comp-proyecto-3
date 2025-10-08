@@ -37,6 +37,7 @@ module computer(
   wire       addr_sel;
   wire       latch_flags;
   wire       branch_taken;
+  wire [1:0] mem_wdata_sel; // 00=ALU 01=A 10=B
 
   control_unit CU (
     .opcode(opcode),
@@ -47,6 +48,7 @@ module computer(
     .sel_data(sel_data),
     .we_mem(we_mem),
     .addr_sel(addr_sel),
+    .mem_wdata_sel(mem_wdata_sel),
     .latch_flags(latch_flags),
     .branch_taken(branch_taken)
   );
@@ -77,13 +79,16 @@ module computer(
   // Data Memory
   wire [7:0] dmem_rdata;
   wire [7:0] mem_addr = (addr_sel) ? B_q : imm;
-  wire store_from_A = (opcode == 7'h27);
-  wire store_from_B = (opcode == 7'h28);
-  wire [7:0] mem_wdata = store_from_A ? A_q :
-                         store_from_B ? B_q :
-                         alu_y;
+  reg  [7:0] mem_wdata;
+  always @* begin
+    case (mem_wdata_sel)
+      2'b01: mem_wdata = A_q;
+      2'b10: mem_wdata = B_q;
+      default: mem_wdata = alu_y; // 00 ALU (suma, AND, etc hacia memoria)
+    endcase
+  end
 
-  data_memory U_DMEM(
+  data_memory DM(
     .clk(clk),
     .we(we_mem),
     .addr(mem_addr),

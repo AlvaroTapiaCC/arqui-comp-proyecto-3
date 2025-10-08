@@ -39,7 +39,8 @@ module test;
         $dumpfile("out/dump.vcd");
         $dumpvars(0, test);
         // Cargar programa (mantiene nombre original del testbench):
-        $readmemb("data/im_memory.dat", Comp.U_IM.mem);
+    // Cargar programa desde im.dat
+    $readmemb("data/im.dat", Comp.U_IM.mem);
 
         // Liberar reset tras breve tiempo
         #2 rst = 0;
@@ -60,9 +61,9 @@ module test;
 
         // Check Inst 1: MOV (50), B | Purpose: Verify that the value from register B (99) is stored in DM[50].
         #2;
-        $display("CHECK @ t=%0t: After MOV (50), B -> DM[50] = %d", $time, Comp.U_DMEM.ram[50]);
-        if (Comp.U_DMEM.ram[50] !== 8'd99) begin
-            $error("FAIL [Part 1]: DM[50] expected 99, got %d", Comp.U_DMEM.ram[50]);
+        $display("CHECK @ t=%0t: After MOV (50), B -> DM[50] = %d", $time, Comp.DM.mem[50]);
+        if (Comp.DM.mem[50] !== 8'd99) begin
+            $error("FAIL [Part 1]: DM[50] expected 99, got %d", Comp.DM.mem[50]);
             mem_sequence_test_failed = 1'b1;
         end
 
@@ -87,9 +88,9 @@ module test;
 
         // Check Inst 4: MOV (51), A | Purpose: Verify that the value from register A (123) is stored in DM[51].
         #2;
-        $display("CHECK @ t=%0t: After MOV (51), A -> DM[51] = %d", $time, Comp.U_DMEM.ram[51]);
-        if (Comp.U_DMEM.ram[51] !== 8'd123) begin
-            $error("FAIL [Part 2]: DM[51] expected 123, got %d", Comp.U_DMEM.ram[51]);
+        $display("CHECK @ t=%0t: After MOV (51), A -> DM[51] = %d", $time, Comp.DM.mem[51]);
+        if (Comp.DM.mem[51] !== 8'd123) begin
+            $error("FAIL [Part 2]: DM[51] expected 123, got %d", Comp.DM.mem[51]);
             mem_sequence_test_failed = 1'b1;
         end
 
@@ -114,9 +115,9 @@ module test;
 
         // Check Inst 7: MOV (50), A | Purpose: Verify that the value from register A (255) overwrites the content of DM[50].
         #2;
-        $display("CHECK @ t=%0t: After MOV (50), A [Overwrite] -> DM[50] = %d", $time, Comp.U_DMEM.ram[50]);
-        if (Comp.U_DMEM.ram[50] !== 8'd255) begin
-            $error("FAIL [Part 3]: DM[50] expected 255 after overwrite, got %d", Comp.U_DMEM.ram[50]);
+        $display("CHECK @ t=%0t: After MOV (50), A [Overwrite] -> DM[50] = %d", $time, Comp.DM.mem[50]);
+        if (Comp.DM.mem[50] !== 8'd255) begin
+            $error("FAIL [Part 3]: DM[50] expected 255 after overwrite, got %d", Comp.DM.mem[50]);
             mem_sequence_test_failed = 1'b1;
         end
 
@@ -164,9 +165,9 @@ module test;
 
         // Check Inst 12: MOV (120), B | Purpose: Verify that the value from register B (50) is stored in DM[120].
         #2;
-        $display("CHECK @ t=%0t: After MOV (120), B -> DM[120] = %d", $time, Comp.U_DMEM.ram[120]);
-        if (Comp.U_DMEM.ram[120] !== 8'd50) begin
-            $error("FAIL [ADD A, Dir]: DM[120] expected 50, got %d", Comp.U_DMEM.ram[120]);
+        $display("CHECK @ t=%0t: After MOV (120), B -> DM[120] = %d", $time, Comp.DM.mem[120]);
+        if (Comp.DM.mem[120] !== 8'd50) begin
+            $error("FAIL [ADD A, Dir]: DM[120] expected 50, got %d", Comp.DM.mem[120]);
             add_a_dir_test_failed = 1'b1;
         end
 
@@ -190,9 +191,9 @@ module test;
         #16; // Wait for the entire 8-instruction program to complete.
 
         // Check Program Result (Inst 14-21): JEQ Logic | Purpose: Verify DM[100] is 1, confirming the conditional jump was correctly taken.
-        $display("CHECK @ t=%0t: After IF/ELSE program (A==B) -> DM[100] = %d", $time, Comp.U_DMEM.ram[100]);
-        if (Comp.U_DMEM.ram[100] !== 8'd1) begin
-            $error("FAIL [JEQ Case 1]: DM[100] expected 1, got %d. The jump was likely not taken.", Comp.U_DMEM.ram[100]);
+        $display("CHECK @ t=%0t: After IF/ELSE program (A==B) -> DM[100] = %d", $time, Comp.DM.mem[100]);
+        if (Comp.DM.mem[100] !== 8'd1) begin
+            $error("FAIL [JEQ Case 1]: DM[100] expected 1, got %d. The jump was likely not taken.", Comp.DM.mem[100]);
             jeq_test_1_failed = 1'b1;
         end
 

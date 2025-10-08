@@ -20,7 +20,7 @@ RTL_FILES = $(SRC_DIR)/alu.v \
 TEST ?= testbench_memory
 TESTBENCH_FILE = $(TESTS_DIR)/$(TEST).v
 
-YOSYS_SCRIPT = $(SCRIPT_DIR)/yosys.tcl
+YOSYS_SCRIPT = $(SCRIPT_DIR)/yosys_memory.tcl
 
 # Rutas de salida
 OUT_DIR = out

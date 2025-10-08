@@ -1,6 +1,4 @@
-// mux_data.v - Multiplexor de fuente de escritura hacia registros A/B
-// Por ahora sólo una fuente (ALU). Se deja preparado para ampliar.
-// sel: 00 -> alu_y, 01 -> data_mem, 10 -> literal (futuro), otros -> 0
+// mux_data.v (alu/mem/lit)
 module mux_data(
   input  wire [7:0] alu_y,
   input  wire [7:0] data_mem_y,   // futuro (por ahora conectar a 8'h00)

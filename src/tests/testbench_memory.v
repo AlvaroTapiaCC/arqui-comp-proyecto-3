@@ -4,11 +4,9 @@
 
 module test;
     reg           clk = 0;
-    reg           rst = 1; // added reset (active high) for current computer
+    reg           rst = 1;
     wire [7:0]    regA_out;
     wire [7:0]    regB_out;
-    wire [7:0]    alu_out;     // mapped to internal debug ALU output
-    wire [14:0]   im_out;      // mapped to internal fetched instruction word (15 bits used)
 
     reg mem_sequence_test_failed = 1'b0;
     reg add_a_dir_test_failed    = 1'b0;
@@ -34,11 +32,7 @@ module test;
     //   Registros: puertos top (regA_out, regB_out)
     //   Data Memory: Comp.U_DMEM.ram[idx]
     //   Instruction Memory: Comp.U_IM.mem
-    //   ALU debug: Comp.dbg_alu_y (synthesis translate_off inside computer.v)
-    //   Instruction word: Comp.dbg_im_word (15 bits)
-    // ------------------------------------------------------------
-    assign alu_out = Comp.dbg_alu_y;       // sólo para waveform/debug
-    assign im_out  = Comp.dbg_im_word;     // 15 bits válidos {opcode[6:0], imm[7:0]}
+    // (Debug interno removido en versión simplificada)
     // ------------------------------------------------------------
 
     initial begin

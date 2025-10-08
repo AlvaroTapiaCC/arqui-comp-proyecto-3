@@ -1,5 +1,4 @@
-// muxB.v - Multiplexor para operando B de la ALU
-// sel: 00 -> A_q, 01 -> B_q, 10 -> imm, otros -> 0
+// muxB.v (A_q/B_q/imm/mem)
 module muxB(
   input  wire [7:0] A_q,
   input  wire [7:0] B_q,

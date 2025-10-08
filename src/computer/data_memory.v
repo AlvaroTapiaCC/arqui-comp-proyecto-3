@@ -16,7 +16,7 @@ module data_memory #(
   reg [DW-1:0] ram [0:(1<<AW)-1];
 
   initial begin
-    $readmemb("mem.dat", ram);
+    $readmemb("data/mem.dat", ram); // ruta actualizada
     // Mensaje de depuración solo en simulación (Yosys define SYNTHESIS al sintetizar)
 `ifndef SYNTHESIS
     $display("[DMEM] ram[0]=%b ram[1]=%b", ram[0], ram[1]);

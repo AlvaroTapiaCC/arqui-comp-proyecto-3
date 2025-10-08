@@ -11,14 +11,14 @@ exec mkdir -p out
 
 # Lee todos los módulos necesarios (ajusta la lista si cambias archivos)
 read_verilog \
-	alu.v \
-	control_unit.v \
-	status_register.v \
-	muxA.v muxB.v mux_data.v mux2.v \
-	data_memory.v \
-	pc.v register.v \
-	instruction_memory.v \
-	computer.v
+	src/computer/alu.v \
+	src/computer/control_unit.v \
+	src/computer/status_register.v \
+	src/computer/muxA.v src/computer/muxB.v src/computer/mux_data.v src/computer/mux2.v \
+	src/computer/data_memory.v \
+	src/computer/pc.v src/computer/register.v \
+	src/computer/instruction_memory.v \
+	src/computer/computer.v
 
 # Establece y verifica jerarquía
 hierarchy -top computer

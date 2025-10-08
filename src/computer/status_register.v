@@ -12,7 +12,8 @@ module status_register(
   output reg        z,
   output reg        n,
   output reg        c,
-  output reg        v
+  output reg        v,
+  output wire [3:0] flags_packed  // {Z,N,C,V}
 );
 
   always @(posedge clk or posedge rst) begin
@@ -30,5 +31,8 @@ module status_register(
       last_opcode <= opcode_in;
     end
   end
+
+  // Empaquetado simple para facilitar debug/exportación
+  assign flags_packed = {z,n,c,v};
 
 endmodule

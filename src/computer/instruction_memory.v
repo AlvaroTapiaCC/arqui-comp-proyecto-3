@@ -7,7 +7,7 @@ module instruction_memory(
   reg [15:0] mem [0:65535];
 
   initial begin
-    $readmemb("im.dat", mem);   // <--- BINARIO
+    $readmemb("data/im.dat", mem);   // <--- BINARIO (ruta actualizada)
 `ifndef SYNTHESIS
     // Log para verificar carga (solo en simulación)
     $display("[IMEM] mem[0]=%b mem[1]=%b", mem[0], mem[1]);

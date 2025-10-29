@@ -1,0 +1,7 @@
+{
+  "name": "tools-drivers",
+  "description": "Drivers tools",
+  "url": "https://github.com/FPGAwars/tools-drivers/releases",
+  "version": "1.1.0",
+  "system": [ "windows", "windows_amd64", "windows_x86" ]
+}

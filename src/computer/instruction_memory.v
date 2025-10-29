@@ -15,7 +15,7 @@ module instruction_memory(
 `ifdef ASIC
   // ========== MODO ASIC: ROM sintetizable ==========
   // Profundidad de la ROM (2**ROM_AW palabras)
-  parameter ROM_AW = 6;  // 64 palabras por defecto (ajustable a 5..8 típicamente)
+  parameter ROM_AW = 4;  // 16 palabras por defecto (suficiente para demo)
   wire [ROM_AW-1:0] a = address[ROM_AW-1:0];
 
   // Salida registrada-combinacional interna
@@ -31,27 +31,34 @@ module instruction_memory(
     end
   endfunction
 
+  // Programa de demostración: cuenta regresiva B=15..0 y refleja en A
+  // Instrucciones usadas:
+  //   0x03 MOV B,lit
+  //   0x00 MOV A,B
+  //   0x0B SUB B,lit
+  //   0x54 JEQ imm
+  //   0x53 JMP imm
   always @* begin
     // Valor por defecto si la dirección no está listada
     rom_q = 15'h0000;
 
-    // Programa (ejemplos en cero). Edítalo según tu ISA.
-    // Usa: rom_q = PACK(7'hOP, 8'hIMM);
     case (a)
-      // Dirección 0
-      0: rom_q = PACK(7'h00, 8'h00); // NOP (ejemplo)
-      // Dirección 1
+      // 0: B <- 0x0F (15)
+      0: rom_q = PACK(7'h03, 8'h0F);
+      // 1: A <- B (mostrar 15)
       1: rom_q = PACK(7'h00, 8'h00);
-      // Dirección 2
-      2: rom_q = PACK(7'h00, 8'h00);
-      // Dirección 3
+      // 2: B <- B - 1
+      2: rom_q = PACK(7'h0B, 8'h01);
+      // 3: A <- B (reflejar en salida)
       3: rom_q = PACK(7'h00, 8'h00);
-
-      // Agrega aquí tus instrucciones...
-      // 4: rom_q = PACK(7'hXX, 8'hYY);
-      // 5: rom_q = PACK(7'hXX, 8'hYY);
-      // ...
-
+      // 4: si Z==1 (B==0) -> goto 7
+      4: rom_q = PACK(7'h54, 8'h07);
+      // 5: goto 2 (loop)
+      5: rom_q = PACK(7'h53, 8'h02);
+      // 6: (sin uso)
+      6: rom_q = PACK(7'h00, 8'h00);
+      // 7: bucle final (halt por salto a sí mismo)
+      7: rom_q = PACK(7'h53, 8'h07);
       default: /* rom_q ya es 0 */ ;
     endcase
   end

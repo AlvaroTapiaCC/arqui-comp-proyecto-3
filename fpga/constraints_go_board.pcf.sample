@@ -1,0 +1,33 @@
+# constraints_go_board.pcf.sample
+# Plantilla de mapeo de pines para Nandland Go Board (iCE40)
+# NOTA: Reemplaza los pines por los de tu placa/revisión.
+# Referencia: documentación de la Go Board / esquemáticos.
+
+# Reloj de la placa (50 MHz típico)
+# set_io clk_osc <PIN_CLK>
+
+# Botón de reset (activo alto en este top)
+# set_io btn_rst <PIN_BTN>
+
+# LEDs (LSB..MSB)
+# set_io leds[0] <PIN_LED0>
+# set_io leds[1] <PIN_LED1>
+# set_io leds[2] <PIN_LED2>
+# set_io leds[3] <PIN_LED3>
+
+# 7 segmentos (a..g)
+# set_io seg[0] <PIN_SEGA>
+# set_io seg[1] <PIN_SEGB>
+# set_io seg[2] <PIN_SEGC>
+# set_io seg[3] <PIN_SEGD>
+# set_io seg[4] <PIN_SEGE>
+# set_io seg[5] <PIN_SEGF>
+# set_io seg[6] <PIN_SEGG>
+
+# Anodos/Catodos (dos dígitos)
+# set_io an[0] <PIN_AN0>
+# set_io an[1] <PIN_AN1>
+
+# Sugerencias:
+# - Si los segmentos/anodos son activos en bajo, deja ACTIVE_LOW_SEG/AN=1 (por defecto) en top_fpga.v
+# - Si son activos en alto, pon esos parámetros a 0 al sintetizar.

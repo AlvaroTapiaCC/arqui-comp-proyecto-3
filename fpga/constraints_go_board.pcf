@@ -1,0 +1,16 @@
+# Nandland Go Board (iCE40-HX1K-VQ100) - Constraints para top_fpga
+set_io clk_osc 15
+set_io btn_rst 53
+set_io leds[0] 56
+set_io leds[1] 57
+set_io leds[2] 59
+set_io leds[3] 60
+set_io seg[0] 3
+set_io seg[1] 4
+set_io seg[2] 93
+set_io seg[3] 91
+set_io seg[4] 90
+set_io seg[5] 1
+set_io seg[6] 2
+set_io an[0] 100
+set_io an[1] 99

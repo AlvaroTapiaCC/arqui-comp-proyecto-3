@@ -1,0 +1,5 @@
+[WARNING GRT-0026] Missing route to pin _240_/A3.
+[WARNING GRT-0026] Missing route to pin _240_/B1.
+[WARNING GRT-0026] Missing route to pin output2/A.
+Warning: There is 1 unconstrained endpoint.
+[WARNING] Did not save OpenROAD database!

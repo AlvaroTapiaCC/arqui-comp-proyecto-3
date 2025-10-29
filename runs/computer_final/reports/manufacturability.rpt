@@ -1,0 +1,19 @@
+Design Name: computer
+Run Directory: /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/computer_final
+----------------------------------------
+
+Magic DRC Summary:
+Source: /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/computer_final/reports/signoff/drc.rpt
+Total Magic DRC violations is 0
+----------------------------------------
+
+LVS Summary:
+Source: /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/computer_final/logs/signoff/39-computer.lef.lvs.log
+Number of nets: 273                        |Number of nets: 273                        
+Design is LVS clean.
+----------------------------------------
+
+Antenna Summary:
+Source: /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/computer_final/logs/signoff/41-arc.log
+Pin violations: 8
+Net violations: 8

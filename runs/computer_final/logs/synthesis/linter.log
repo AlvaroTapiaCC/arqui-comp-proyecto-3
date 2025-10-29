@@ -1,0 +1,26 @@
+%Warning-EOFNEWLINE: /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/src/computer/control_unit.v:350:10: Missing newline at end of file (POSIX 3.206).
+                                                                                                                  : ... Suggest add newline.
+  350 | endmodule
+      |          ^
+                     ... For warning description see https://verilator.org/warn/EOFNEWLINE?v=5.009
+                     ... Use "/* verilator lint_off EOFNEWLINE */" and lint_on around source to disable this message.
+%Warning-EOFNEWLINE: /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/src/computer/instruction_memory.v:77:10: Missing newline at end of file (POSIX 3.206).
+                                                                                                                       : ... Suggest add newline.
+   77 | endmodule
+      |          ^
+%Warning-EOFNEWLINE: /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/src/computer/status_register.v:36:10: Missing newline at end of file (POSIX 3.206).
+                                                                                                                    : ... Suggest add newline.
+   36 | endmodule
+      |          ^
+%Warning-UNUSEDSIGNAL: /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/src/computer/computer.v:110:14: Signal is not used: 'flags_packed'
+                                                                                                                : ... In instance computer
+  110 |   wire [3:0] flags_packed;
+      |              ^~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/src/computer/instruction_memory.v:11:22: Bits of signal are not used: 'address'[15:4]
+                                                                                                                         : ... In instance computer.U_IM
+   11 |   input  wire [15:0] address,
+      |                      ^~~~~~~
+%Warning-LATCH: /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/src/computer/alu.v:12:3: Latch inferred for signal 'computer.U_ALU.tmp' (not all control paths of combinational always assign a value)
+                                                                                                  : ... Suggest use of always_latch for intentional latches
+   12 |   always @* begin
+      |   ^~~~~~

@@ -13,7 +13,9 @@ module data_memory #(
 
   reg [DW-1:0] mem [0:(1<<AW)-1];
 
+`ifndef SYNTHESIS
   initial $readmemb("data/mem.dat", mem);
+`endif
 
   // write
   always @(posedge clk) if (we) mem[addr] <= wdata;

@@ -1,0 +1,19 @@
+
+72. Printing statistics.
+
+=== computer ===
+
+   Number of wires:                  8
+   Number of wire bits:             31
+   Number of public wires:           6
+   Number of public wire bits:      29
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 29
+     sky130_fd_sc_hd__conb_1        27
+     sky130_fd_sc_hd__dfrtp_2        1
+     sky130_fd_sc_hd__inv_2          1
+
+   Chip area for module '\computer': 131.376000
+

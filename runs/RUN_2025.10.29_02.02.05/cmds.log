@@ -1,0 +1,48 @@
+Wed Oct 29 02:02:05 UTC 2025 - Executing "openroad -exit -no_init -python /openlane/scripts/odbpy/lefutil.py get_metal_layers -o /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/tmp/layers.list /home/zerotoasic/asic_tools/pdk/sky130A/libs.ref/sky130_fd_sc_hd/techlef/sky130_fd_sc_hd__nom.tlef"
+
+Wed Oct 29 02:02:05 UTC 2025 - Executing "/openlane/scripts/mergeLef.py -o /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/tmp/merged.nom.lef -i /home/zerotoasic/asic_tools/pdk/sky130A/libs.ref/sky130_fd_sc_hd/techlef/sky130_fd_sc_hd__nom.tlef {/home/zerotoasic/asic_tools/pdk/sky130A/libs.ref/sky130_fd_sc_hd/lef/sky130_fd_sc_hd.lef /home/zerotoasic/asic_tools/pdk/sky130A/libs.ref/sky130_fd_sc_hd/lef/sky130_ef_sc_hd.lef} |& tee /dev/null"
+
+Wed Oct 29 02:02:06 UTC 2025 - Executing "/openlane/scripts/mergeLef.py -o /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/tmp/merged.min.lef -i /home/zerotoasic/asic_tools/pdk/sky130A/libs.ref/sky130_fd_sc_hd/techlef/sky130_fd_sc_hd__min.tlef {/home/zerotoasic/asic_tools/pdk/sky130A/libs.ref/sky130_fd_sc_hd/lef/sky130_fd_sc_hd.lef /home/zerotoasic/asic_tools/pdk/sky130A/libs.ref/sky130_fd_sc_hd/lef/sky130_ef_sc_hd.lef} |& tee /dev/null"
+
+Wed Oct 29 02:02:06 UTC 2025 - Executing "/openlane/scripts/mergeLef.py -o /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/tmp/merged.max.lef -i /home/zerotoasic/asic_tools/pdk/sky130A/libs.ref/sky130_fd_sc_hd/techlef/sky130_fd_sc_hd__max.tlef {/home/zerotoasic/asic_tools/pdk/sky130A/libs.ref/sky130_fd_sc_hd/lef/sky130_fd_sc_hd.lef /home/zerotoasic/asic_tools/pdk/sky130A/libs.ref/sky130_fd_sc_hd/lef/sky130_ef_sc_hd.lef} |& tee /dev/null"
+
+Wed Oct 29 02:02:06 UTC 2025 - Executing "python3 /openlane/scripts/mergeLib.py --output /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/tmp/synthesis/merged.lib --name sky130A_merged /home/zerotoasic/asic_tools/pdk/sky130A/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__tt_025C_1v80.lib"
+
+Wed Oct 29 02:02:06 UTC 2025 - Executing "python3 /openlane/scripts/libtrim.py --cell-file /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/tmp/synthesis/trimmed.lib.exclude.list --output /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/tmp/synthesis/trimmed.lib /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/tmp/synthesis/merged.lib"
+
+Wed Oct 29 02:02:06 UTC 2025 - Executing "python3 /openlane/scripts/libtrim.py --cell-file /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/tmp/cts/cts.lib.exclude.list --output /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/tmp/cts/cts.lib /home/zerotoasic/asic_tools/pdk/sky130A/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__tt_025C_1v80.lib"
+
+Wed Oct 29 02:02:06 UTC 2025 - Executing "python3 /openlane/scripts/libtrim.py --cell-file /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/tmp/cts/cts-fastest.lib.exclude.list --output /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/tmp/cts/cts-fastest.lib /home/zerotoasic/asic_tools/pdk/sky130A/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__ff_n40C_1v95.lib"
+
+Wed Oct 29 02:02:07 UTC 2025 - Executing "python3 /openlane/scripts/libtrim.py --cell-file /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/tmp/cts/cts-slowest.lib.exclude.list --output /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/tmp/cts/cts-slowest.lib /home/zerotoasic/asic_tools/pdk/sky130A/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__ss_100C_1v60.lib"
+
+Wed Oct 29 02:02:07 UTC 2025 - Executing "python3 /openlane/scripts/new_tracks.py -i /home/zerotoasic/asic_tools/pdk/sky130A/libs.tech/openlane/sky130_fd_sc_hd/tracks.info -o /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/tmp/routing/config.tracks"
+
+Wed Oct 29 02:02:08 UTC 2025 - Executing "echo {OpenLane d054702b2cce04761cc2bc598f6b95c9d8ca7c6c} > /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/OPENLANE_VERSION"
+
+Wed Oct 29 02:02:08 UTC 2025 - Executing "bash -c {verilator  --lint-only  -Wall  --Wno-DECLFILENAME  --top-module computer  /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/src/computer/alu.v /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/src/computer/computer.v /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/src/computer/control_unit.v /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/src/computer/data_memory.v /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/src/computer/instruction_memory.v /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/src/computer/mux_data.v /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/src/computer/mux2.v /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/src/computer/muxA.v /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/src/computer/muxB.v /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/src/computer/pc.v /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/src/computer/register.v /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/src/computer/status_register.v -Wno-fatal --relative-includes +define+SYNTHESIS +define+ASIC |& tee /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/logs/synthesis/linter.log /dev/null}"
+
+Wed Oct 29 02:02:08 UTC 2025 - Executing "sed -E {s/^([[:space:]]+)pg_pin(.*)/\1pin\2\n\1    direction : "inout";/g} /home/zerotoasic/asic_tools/pdk/sky130A/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__tt_025C_1v80.lib > /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/tmp/synthesis/1-sky130_fd_sc_hd__tt_025C_1v80.no_pg.lib"
+
+Wed Oct 29 02:02:08 UTC 2025 - Executing "sed -E {s/^([[:space:]]+)pg_pin(.*)/\1pin\2\n\1    direction : "inout";/g} /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/tmp/synthesis/trimmed.lib > /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/tmp/synthesis/1-trimmed.no_pg.lib"
+
+Wed Oct 29 02:02:08 UTC 2025 - Executing "yosys -c /openlane/scripts/yosys/synth.tcl |& tee /dev/null /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/logs/synthesis/1-synthesis.log"
+
+Wed Oct 29 02:02:08 UTC 2025 - Executing "sed -i.bak -e {s/\(set ::env(CURRENT_NETLIST)\).*/\1 \/home\/zerotoasic\/Documents\/proyecto3\/arqui-comp-proyecto-3\/runs\/RUN_2025.10.29_02.02.05\/results\/synthesis\/computer.v/} /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/config.tcl"
+
+Wed Oct 29 02:02:08 UTC 2025 - Executing "sed -i.bak /defparam/d /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/results/synthesis/computer.v"
+
+Wed Oct 29 02:02:09 UTC 2025 - Executing "sta -exit -no_init /openlane/scripts/openroad/sta/multi_corner.tcl |& tee /dev/null /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/logs/synthesis/2-sta.log"
+
+Wed Oct 29 02:02:09 UTC 2025 - Executing "openroad -exit /openlane/scripts/openroad/floorplan.tcl |& tee /dev/null /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/logs/floorplan/3-initial_fp.log"
+
+Wed Oct 29 02:02:10 UTC 2025 - Executing "openroad -exit -no_init -python /openlane/scripts/odbpy/snap_to_grid.py --output /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/tmp/floorplan/3-minimized_pdn.txt --input-lef /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/tmp/merged.nom.lef 2.8175 2.7199999999999998 5.635 5.4399999999999995"
+
+Wed Oct 29 02:02:10 UTC 2025 - Executing "openroad -exit -no_init -python /openlane/scripts/odbpy/defutil.py extract_core_dims --output-data /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/tmp/dimensions.txt --input-lef /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/tmp/merged.nom.lef /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/tmp/floorplan/3-initial_fp.def"
+
+Wed Oct 29 02:02:10 UTC 2025 - Executing "openroad -exit /openlane/scripts/openroad/ioplacer.tcl |& tee /dev/null /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/logs/floorplan/4-io.log"
+
+Wed Oct 29 02:02:11 UTC 2025 - Executing "openroad -exit /openlane/scripts/openroad/tapcell.tcl |& tee /dev/null /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/logs/floorplan/5-tap.log"
+
+Wed Oct 29 02:02:11 UTC 2025 - Executing "openroad -exit /openlane/scripts/openroad/pdn.tcl |& tee /dev/null /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.02.05/logs/floorplan/6-pdn.log"
+

@@ -1,0 +1,2 @@
+[WARNING ODB-0220] WARNING (LEFPARS-2036): SOURCE statement is obsolete in version 5.6 and later.
+To avoid this warning in the future, remove this statement from the LEF file with version 5.6 or later. See file /home/zerotoasic/Documents/proyecto3/arqui-comp-proyecto-3/runs/RUN_2025.10.29_02.01.22/tmp/merged.nom.lef at line 68353.
